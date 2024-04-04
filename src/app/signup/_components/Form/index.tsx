@@ -17,6 +17,7 @@ import { Input } from "~/components/ui/input";
 import { api } from "~/trpc/react";
 import { useRouter } from "next/navigation";
 import useUserStore from "~/store/user";
+import { Alert, AlertTitle } from "~/components/ui/alert";
 
 export default function SignupForm() {
   const router = useRouter();
@@ -33,7 +34,7 @@ export default function SignupForm() {
       form.setError("root", { message: response.errorMessage });
     } else {
       setUser(response.data!);
-      router.push("/");
+      router.push("/verify-email");
     }
   };
 
@@ -44,6 +45,11 @@ export default function SignupForm() {
         method="POST"
         onSubmit={form.handleSubmit(onSubmit)}
       >
+        {form.formState.errors.root?.message && (
+          <Alert>
+            <AlertTitle>{form.formState.errors.root.message}</AlertTitle>
+          </Alert>
+        )}
         <FormField
           control={form.control}
           name="name"
@@ -64,7 +70,12 @@ export default function SignupForm() {
             <FormItem>
               <FormLabel>Email address</FormLabel>
               <FormControl>
-                <Input placeholder="Enter" {...field} autoComplete="email" />
+                <Input
+                  placeholder="Enter"
+                  {...field}
+                  autoComplete="email"
+                  type="email"
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -81,13 +92,13 @@ export default function SignupForm() {
                   placeholder="Enter"
                   {...field}
                   autoComplete="new-password"
+                  type="password"
                 />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
-
         <div>
           <Button type="submit" className="w-full">
             CREATE ACCOUNT

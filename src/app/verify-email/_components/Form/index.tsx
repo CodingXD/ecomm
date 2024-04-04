@@ -16,24 +16,22 @@ import {
 import { Input } from "~/components/ui/input";
 import { api } from "~/trpc/react";
 import { useRouter } from "next/navigation";
-import useUserStore from "~/store/user";
 import { Alert, AlertTitle } from "~/components/ui/alert";
 
-export default function LoginForm() {
-  const setUser = useUserStore((state) => state.setUser);
+export default function VerifyEmailForm() {
   const router = useRouter();
   const form = useForm<FormFields>({
     resolver: zodResolver(schema),
+    defaultValues: {},
   });
 
-  const login = api.auth.login.useMutation();
+  const verifyOtp = api.auth.verifyOtp.useMutation();
 
   const onSubmit: SubmitHandler<FormFields> = async (data) => {
-    const response = await login.mutateAsync(data);
+    const response = await verifyOtp.mutateAsync(data);
     if (!response.success) {
       form.setError("root", { message: response.errorMessage });
     } else {
-      setUser(response.data!);
       router.push("/");
     }
   };
@@ -52,44 +50,20 @@ export default function LoginForm() {
         )}
         <FormField
           control={form.control}
-          name="email"
+          name="otp"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Email address</FormLabel>
+              <FormLabel>Name</FormLabel>
               <FormControl>
-                <Input
-                  placeholder="Enter"
-                  {...field}
-                  autoComplete="email"
-                  type="email"
-                />
+                <Input placeholder="Enter" {...field} autoComplete="name" />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
-        <FormField
-          control={form.control}
-          name="password"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Password</FormLabel>
-              <FormControl>
-                <Input
-                  placeholder="Enter"
-                  {...field}
-                  autoComplete="current-password"
-                  type="password"
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
         <div>
           <Button type="submit" className="w-full">
-            LOGIN
+            VERIFY
           </Button>
         </div>
       </form>

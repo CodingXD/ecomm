@@ -2,6 +2,7 @@ import { compareSync, hashSync } from "bcrypt";
 import { eq } from "drizzle-orm";
 import { schema as LoginSchema } from "~/app/login/_components/Form/schema";
 import { schema as SignupSchema } from "~/app/signup/_components/Form/schema";
+import { schema as VerifySchema } from "~/app/verify-email/_components/Form/schema";
 
 import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
 import { users } from "~/server/db/schema";
@@ -71,6 +72,34 @@ export const authRouter = createTRPCRouter({
           name: newUser[0]!.name,
           email: input.email,
         },
+      };
+    }),
+
+  verifyOtp: publicProcedure
+    .input(VerifySchema)
+    .mutation(async ({ ctx, input }) => {
+      const foundUsers = await ctx.db
+        .select({ otp: users.otp })
+        .from(users)
+        .where(eq(users.email, input.email))
+        .limit(1);
+
+      if (foundUsers.length === 0) {
+        return {
+          success: false,
+          errorMessage: "User not found",
+        };
+      }
+
+      if (input.otp !== foundUsers[0]?.otp) {
+        return {
+          success: false,
+          errorMessage: "Incorrect OTP",
+        };
+      }
+
+      return {
+        success: true,
       };
     }),
 });
