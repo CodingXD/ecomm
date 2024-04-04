@@ -18,17 +18,17 @@ import { api } from "~/trpc/react";
 import { useRouter } from "next/navigation";
 import useUserStore from "~/store/user";
 
-export default function LoginForm() {
-  const setUser = useUserStore((state) => state.setUser);
+export default function SignupForm() {
   const router = useRouter();
+  const setUser = useUserStore((state) => state.setUser);
   const form = useForm<FormFields>({
     resolver: zodResolver(schema),
   });
 
-  const login = api.auth.login.useMutation();
+  const signup = api.auth.signup.useMutation();
 
   const onSubmit: SubmitHandler<FormFields> = async (data) => {
-    const response = await login.mutateAsync(data);
+    const response = await signup.mutateAsync(data);
     if (!response.success) {
       form.setError("root", { message: response.errorMessage });
     } else {
@@ -44,6 +44,19 @@ export default function LoginForm() {
         method="POST"
         onSubmit={form.handleSubmit(onSubmit)}
       >
+        <FormField
+          control={form.control}
+          name="name"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Name</FormLabel>
+              <FormControl>
+                <Input placeholder="Enter" {...field} autoComplete="name" />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
         <FormField
           control={form.control}
           name="email"
@@ -67,7 +80,7 @@ export default function LoginForm() {
                 <Input
                   placeholder="Enter"
                   {...field}
-                  autoComplete="current-password"
+                  autoComplete="new-password"
                 />
               </FormControl>
               <FormMessage />
@@ -77,7 +90,7 @@ export default function LoginForm() {
 
         <div>
           <Button type="submit" className="w-full">
-            LOGIN
+            CREATE ACCOUNT
           </Button>
         </div>
       </form>
