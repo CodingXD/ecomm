@@ -43,7 +43,7 @@ export default function VerifyEmailForm({ email }: VerifyEmailFormProps) {
         onSubmit={form.handleSubmit(onSubmit)}
       >
         {form.formState.errors.root?.message && (
-          <Alert>
+          <Alert variant="destructive">
             <AlertTitle>{form.formState.errors.root.message}</AlertTitle>
           </Alert>
         )}

@@ -46,7 +46,7 @@ export default function LoginForm() {
         onSubmit={form.handleSubmit(onSubmit)}
       >
         {form.formState.errors.root?.message && (
-          <Alert>
+          <Alert variant="destructive">
             <AlertTitle>{form.formState.errors.root.message}</AlertTitle>
           </Alert>
         )}

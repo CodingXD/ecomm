@@ -46,7 +46,7 @@ export default function SignupForm() {
         onSubmit={form.handleSubmit(onSubmit)}
       >
         {form.formState.errors.root?.message && (
-          <Alert>
+          <Alert variant="destructive">
             <AlertTitle>{form.formState.errors.root.message}</AlertTitle>
           </Alert>
         )}

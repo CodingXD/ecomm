@@ -1,11 +1,11 @@
 import Link from "next/link";
 import MobileNavbar from "./mobile-navbar";
 import {
-  Bars3Icon,
   MagnifyingGlassIcon,
   ShoppingCartIcon,
 } from "@heroicons/react/24/outline";
 import Toggle from "./toggle";
+import NavItem from "./nav-item";
 
 const navigation = {
   categories: [
@@ -90,9 +90,9 @@ const navigation = {
 };
 
 const topNavigation = [
-  { href: "/help", text: "Help", protected: false },
-  { href: "/orders", text: "Orders & Returns", protected: true },
-  { href: "/profile", text: "Hi, John", protected: true },
+  { href: "/help", text: "Help", isProtected: false },
+  { href: "/orders", text: "Orders & Returns", isProtected: true },
+  { href: "/profile", text: "Hi", isProtected: true },
 ];
 
 export default function Navbar() {
@@ -107,14 +107,8 @@ export default function Navbar() {
           <div>
             <div className="mx-auto flex h-10 max-w-7xl items-center justify-end px-4 sm:px-6 lg:px-8">
               <div className="flex items-center space-x-6">
-                {topNavigation.map(({ href, text }) => (
-                  <Link
-                    href={href}
-                    key={href}
-                    className="text-xs font-medium hover:text-gray-700"
-                  >
-                    {text}
-                  </Link>
+                {topNavigation.map((item) => (
+                  <NavItem {...item} />
                 ))}
               </div>
             </div>
