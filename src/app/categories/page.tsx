@@ -1,4 +1,10 @@
+import type { Metadata } from "next";
 import CategoryList from "./_components/category-list";
+
+export const metadata: Metadata = {
+  title: "Categories",
+  description: "Choose your favorite categories",
+};
 
 export default function Categories() {
   return (

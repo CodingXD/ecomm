@@ -1,5 +1,11 @@
 import Link from "next/link";
 import Form from "./_components/Form";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Sign up",
+  description: "Create a new account",
+};
 
 export default function Signup() {
   return (

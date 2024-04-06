@@ -1,5 +1,11 @@
 import { z } from "zod";
 import Form from "./_components/Form";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Verify Email",
+  description: "Verify your email address",
+};
 
 export default function Signup({
   searchParams,
