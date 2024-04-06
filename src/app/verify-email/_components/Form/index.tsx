@@ -3,26 +3,25 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { type SubmitHandler, useForm } from "react-hook-form";
 import { schema } from "./schema";
-import type { FormFields } from "./types";
+import type { FormFields, VerifyEmailFormProps } from "./types";
 import { Button } from "~/components/ui/button";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "~/components/ui/form";
-import { Input } from "~/components/ui/input";
+import { Form } from "~/components/ui/form";
 import { api } from "~/trpc/react";
 import { useRouter } from "next/navigation";
 import { Alert, AlertTitle } from "~/components/ui/alert";
+import {
+  InputOTP,
+  InputOTPGroup,
+  InputOTPSlot,
+} from "~/components/ui/input-otp";
 
-export default function VerifyEmailForm() {
+export default function VerifyEmailForm({ email }: VerifyEmailFormProps) {
   const router = useRouter();
   const form = useForm<FormFields>({
     resolver: zodResolver(schema),
-    defaultValues: {},
+    defaultValues: {
+      email,
+    },
   });
 
   const verifyOtp = api.auth.verifyOtp.useMutation();
@@ -48,19 +47,35 @@ export default function VerifyEmailForm() {
             <AlertTitle>{form.formState.errors.root.message}</AlertTitle>
           </Alert>
         )}
-        <FormField
-          control={form.control}
-          name="otp"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Name</FormLabel>
-              <FormControl>
-                <Input placeholder="Enter" {...field} autoComplete="name" />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+        <InputOTP
+          maxLength={8}
+          onComplete={(value) => form.setValue("otp", value)}
+        >
+          <InputOTPGroup>
+            <InputOTPSlot index={0} />
+          </InputOTPGroup>
+          <InputOTPGroup>
+            <InputOTPSlot index={1} />
+          </InputOTPGroup>
+          <InputOTPGroup>
+            <InputOTPSlot index={2} />
+          </InputOTPGroup>
+          <InputOTPGroup>
+            <InputOTPSlot index={3} />
+          </InputOTPGroup>
+          <InputOTPGroup>
+            <InputOTPSlot index={4} />
+          </InputOTPGroup>
+          <InputOTPGroup>
+            <InputOTPSlot index={5} />
+          </InputOTPGroup>
+          <InputOTPGroup>
+            <InputOTPSlot index={6} />
+          </InputOTPGroup>
+          <InputOTPGroup>
+            <InputOTPSlot index={7} />
+          </InputOTPGroup>
+        </InputOTP>
         <div>
           <Button type="submit" className="w-full">
             VERIFY
