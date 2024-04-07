@@ -24,7 +24,7 @@ export default function Login() {
           <Form />
         </div>
         <p className="mt-10 pt-5 text-center text-sm text-gray-500">
-          Don't have an Account?{" "}
+          Don&apos;t have an Account?{" "}
           <Link
             href="/signup"
             className="font-semibold leading-6 text-gray-600 hover:text-gray-500"

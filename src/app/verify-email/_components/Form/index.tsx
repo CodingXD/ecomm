@@ -49,7 +49,7 @@ export default function VerifyEmailForm({ email }: VerifyEmailFormProps) {
         )}
         <InputOTP
           maxLength={8}
-          onComplete={(value) => form.setValue("otp", value)}
+          onComplete={(value: string) => form.setValue("otp", value)}
         >
           <InputOTPGroup>
             <InputOTPSlot index={0} />

@@ -33,6 +33,7 @@ export default function Signup({
           ) : (
             <div className="text-center">
               <small className="text-red-500">
+                {/* eslint-disable-next-line @typescript-eslint/no-unsafe-member-access */}
                 {JSON.parse(validator.error.message)[0].message}
               </small>
             </div>

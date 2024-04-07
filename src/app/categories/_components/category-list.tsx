@@ -61,27 +61,26 @@ export default function CategoryList({ page }: Props) {
           {Array(10).fill(<Skeleton className="h-5 w-3/4 rounded-full" />)}
         </div>
       )}
-      {catResponse.data &&
-        catResponse.data.map(
-          ({ categories: { id, name }, user_interested_categories }) => (
-            <div key={id} className="flex items-center space-x-2">
-              <Checkbox
-                id={id}
-                value={id}
-                defaultChecked={!!user_interested_categories}
-                onCheckedChange={() =>
-                  saveInterest.mutate({ categoryId: id, userId: user!.id })
-                }
-              />
-              <label
-                htmlFor={id}
-                className="text-sm font-medium leading-none peer-disabled:opacity-70"
-              >
-                {name}
-              </label>
-            </div>
-          ),
-        )}
+      {catResponse?.data?.map(
+        ({ categories: { id, name }, user_interested_categories }) => (
+          <div key={id} className="flex items-center space-x-2">
+            <Checkbox
+              id={id}
+              value={id}
+              defaultChecked={!!user_interested_categories}
+              onCheckedChange={() =>
+                saveInterest.mutate({ categoryId: id, userId: user!.id })
+              }
+            />
+            <label
+              htmlFor={id}
+              className="text-sm font-medium leading-none peer-disabled:opacity-70"
+            >
+              {name}
+            </label>
+          </div>
+        ),
+      )}
       {!tccResponse.isLoading && tccResponse.data! > rowsPerPage && (
         <Pagination>
           <PaginationContent>
