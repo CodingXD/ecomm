@@ -31,7 +31,7 @@ export default function CategoryList({ page }: Props) {
     {
       limit: rowsPerPage,
       offset,
-      userId: user!.id,
+      userId: user?.id ?? "",
     },
     { enabled: !!user?.id },
   );
