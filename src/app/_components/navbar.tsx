@@ -20,7 +20,7 @@ export default function Navbar() {
   const user = useUserStore((state) => state.user);
 
   if (!user && pathname.startsWith("/categories")) {
-    router.replace("/login");
+    router.push("/login");
   }
 
   return (
