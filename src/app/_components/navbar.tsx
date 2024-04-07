@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import MobileNavbar from "./mobile-navbar";
 import {
@@ -7,8 +9,19 @@ import {
 import Toggle from "./toggle";
 import NavItem from "./nav-item";
 import { navigation, topNavigation } from "~/lib/constants/routes";
+import { usePathname, useRouter } from "next/navigation";
+import useUserStore from "~/store/user";
 
 export default function Navbar() {
+  const router = useRouter();
+  const pathname = usePathname();
+  const user = useUserStore((state) => state.user);
+
+  if (!user && pathname.startsWith("/categories")) {
+    router.replace("/login");
+    return <></>;
+  }
+
   return (
     <div className="bg-white">
       {/* Mobile menu */}
@@ -23,6 +36,9 @@ export default function Navbar() {
                 {topNavigation.map((item) => (
                   <NavItem key={item.href} {...item} />
                 ))}
+                {!user && (
+                  <NavItem href="/login" isProtected={false} text="Login" />
+                )}
               </div>
             </div>
           </div>
