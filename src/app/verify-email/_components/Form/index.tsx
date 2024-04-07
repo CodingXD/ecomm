@@ -31,7 +31,7 @@ export default function VerifyEmailForm({ email }: VerifyEmailFormProps) {
     if (!response.success) {
       form.setError("root", { message: response.errorMessage });
     } else {
-      router.push("/");
+      router.push("/categories");
     }
   };
 

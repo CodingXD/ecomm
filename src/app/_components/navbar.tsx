@@ -108,7 +108,7 @@ export default function Navbar() {
             <div className="mx-auto flex h-10 max-w-7xl items-center justify-end px-4 sm:px-6 lg:px-8">
               <div className="flex items-center space-x-6">
                 {topNavigation.map((item) => (
-                  <NavItem {...item} />
+                  <NavItem key={item.href} {...item} />
                 ))}
               </div>
             </div>

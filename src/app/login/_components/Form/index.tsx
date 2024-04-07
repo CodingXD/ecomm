@@ -34,7 +34,7 @@ export default function LoginForm() {
       form.setError("root", { message: response.errorMessage });
     } else {
       setUser(response.data!);
-      router.push("/");
+      router.push("/categories");
     }
   };
 

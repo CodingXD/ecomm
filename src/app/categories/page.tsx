@@ -6,7 +6,11 @@ export const metadata: Metadata = {
   description: "Choose your favorite categories",
 };
 
-export default function Categories() {
+export default function Categories({
+  searchParams: { p = "1" },
+}: {
+  searchParams: { p?: string };
+}) {
   return (
     <div className="mt-10 space-y-6 sm:mx-auto sm:w-full sm:max-w-[480px]">
       <div className="divide-y-2 bg-white px-6 py-12 shadow sm:rounded-lg sm:px-12">
@@ -18,7 +22,7 @@ export default function Categories() {
             We will keep you notified.
           </p>
           <p className="mb-2 text-base font-medium">My saved interests!</p>
-          <CategoryList />
+          <CategoryList page={Number(p)} />
         </div>
       </div>
     </div>

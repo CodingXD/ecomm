@@ -8,6 +8,9 @@ export const env = createEnv({
    */
   server: {
     DATABASE_URL: z.string().url(),
+    JWT_SECRET: z.string(),
+    NODEMAILER_USER: z.string(),
+    NODEMAILER_PASSWORD: z.string(),
     NODE_ENV: z
       .enum(["development", "test", "production"])
       .default("development"),
@@ -28,6 +31,9 @@ export const env = createEnv({
    */
   runtimeEnv: {
     DATABASE_URL: process.env.DATABASE_URL,
+    JWT_SECRET: process.env.JWT_SECRET,
+    NODEMAILER_USER: process.env.NODEMAILER_USER,
+    NODEMAILER_PASSWORD: process.env.NODEMAILER_PASSWORD,
     NODE_ENV: process.env.NODE_ENV,
     // NEXT_PUBLIC_CLIENTVAR: process.env.NEXT_PUBLIC_CLIENTVAR,
   },

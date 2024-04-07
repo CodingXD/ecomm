@@ -34,7 +34,7 @@ export default function SignupForm() {
       form.setError("root", { message: response.errorMessage });
     } else {
       setUser(response.data!);
-      router.push("/verify-email");
+      router.push(`/verify-email?email=${data.email}`);
     }
   };
 

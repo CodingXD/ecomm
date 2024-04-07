@@ -3,6 +3,7 @@ import { eq } from "drizzle-orm";
 import { schema as LoginSchema } from "~/app/login/_components/Form/schema";
 import { schema as SignupSchema } from "~/app/signup/_components/Form/schema";
 import { schema as VerifySchema } from "~/app/verify-email/_components/Form/schema";
+import { sendEmail } from "~/lib/email";
 
 import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
 import { users } from "~/server/db/schema";
@@ -56,14 +57,22 @@ export const authRouter = createTRPCRouter({
       }
 
       const password = hashSync(input.password, 10);
+      const otp = "12345678";
       const newUser = await ctx.db
         .insert(users)
         .values({
           email: input.email,
           name: input.name,
           password,
+          otp,
         })
         .returning({ id: users.id, name: users.name });
+
+      sendEmail({
+        to: input.email,
+        subject: "Welcome to Ecomm",
+        text: `OTP: ${otp}`,
+      });
 
       return {
         success: true,
