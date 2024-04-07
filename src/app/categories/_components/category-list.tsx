@@ -28,7 +28,7 @@ export default function CategoryList({ page }: Props) {
     limit: rowsPerPage,
     offset,
   });
-  const totalPages = Math.ceil(catResponse.data?.length || 0 / rowsPerPage);
+  const totalPages = Math.ceil(100 / rowsPerPage);
   const saveInterest = api.categories.saveInterest.useMutation();
 
   const renderPageNumbers = () => {
