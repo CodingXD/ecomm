@@ -37,7 +37,11 @@ export default function CategoryList({ page }: Props) {
   );
   const totalPages = Math.ceil(tccResponse.data ?? 100 / rowsPerPage);
   const saveInterest = api.categories.saveInterest.useMutation({
-    onSuccess: () => router.refresh(),
+    onSuccess: () =>
+      api
+        .useUtils()
+        .invalidate()
+        .finally(() => router.refresh()),
   });
 
   const renderPageNumbers = () => {
