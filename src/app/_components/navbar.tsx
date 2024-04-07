@@ -11,17 +11,17 @@ import {
 import Toggle from "./toggle";
 import NavItem from "./nav-item";
 import { navigation, topNavigation } from "~/lib/constants/routes";
-// import { usePathname, useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import useUserStore from "~/store/user";
 
 export default function Navbar() {
-  // const router = useRouter();
-  // const pathname = usePathname();
+  const router = useRouter();
+  const pathname = usePathname();
   const user = useUserStore((state) => state.user);
 
-  // if (!user && pathname.startsWith("/categories")) {
-  //   router.replace("/login");
-  // }
+  if (!user && pathname.startsWith("/categories")) {
+    router.replace("/login");
+  }
 
   return (
     <div className="bg-white">

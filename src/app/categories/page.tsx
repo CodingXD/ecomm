@@ -6,6 +6,8 @@ export const metadata: Metadata = {
   description: "Choose your favorite categories",
 };
 
+export const dynamic = "force-dynamic";
+
 export default function Categories({
   searchParams: { p = "1" },
 }: {
