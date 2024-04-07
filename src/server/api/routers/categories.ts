@@ -1,4 +1,4 @@
-import { and, count, eq } from "drizzle-orm";
+import { and, eq, sql } from "drizzle-orm";
 import { z } from "zod";
 
 import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
@@ -30,7 +30,9 @@ export const categoriesRouter = createTRPCRouter({
     }),
 
   getTotalCategoriesCount: publicProcedure.query(async ({ ctx, input }) => {
-    const response = await ctx.db.select({ count: count() }).from(categories);
+    const response = await ctx.db
+      .select({ count: sql<number>`COUNT(*)::INTEGER` })
+      .from(categories);
     return response[0]?.count ?? 0;
   }),
 

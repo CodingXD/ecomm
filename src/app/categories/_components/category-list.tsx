@@ -23,7 +23,10 @@ export default function CategoryList({ page }: Props) {
   const user = useUserStore((state) => state.user);
   const rowsPerPage = 6;
   const offset = rowsPerPage * (page - 1);
-  const tccResponse = api.categories.getTotalCategoriesCount.useQuery();
+  const tccResponse = api.categories.getTotalCategoriesCount.useQuery(
+    undefined,
+    { enabled: !!user?.id },
+  );
   const catResponse = api.categories.getCategories.useQuery(
     {
       limit: rowsPerPage,
