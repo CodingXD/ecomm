@@ -1,5 +1,6 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { Checkbox } from "~/components/ui/checkbox";
 import {
   Pagination,
@@ -18,16 +19,23 @@ type Props = {
 };
 
 export default function CategoryList({ page }: Props) {
+  const router = useRouter();
   const user = useUserStore((state) => state.user);
   const rowsPerPage = 6;
   const offset = rowsPerPage * (page - 1);
   const tccResponse = api.categories.getTotalCategoriesCount.useQuery();
-  const catResponse = api.categories.getCategories.useQuery({
-    limit: rowsPerPage,
-    offset,
+  const catResponse = api.categories.getCategories.useQuery(
+    {
+      limit: rowsPerPage,
+      offset,
+      userId: user!.id,
+    },
+    { enabled: !!user?.id },
+  );
+  const totalPages = Math.ceil(tccResponse.data ?? 100 / rowsPerPage);
+  const saveInterest = api.categories.saveInterest.useMutation({
+    onSuccess: () => router.refresh(),
   });
-  const totalPages = Math.ceil(100 / rowsPerPage);
-  const saveInterest = api.categories.saveInterest.useMutation();
 
   const renderPageNumbers = () => {
     const pageNumbers = [];

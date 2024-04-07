@@ -6,14 +6,23 @@ import { categories, userInterestedCategories } from "~/server/db/schema";
 
 export const categoriesRouter = createTRPCRouter({
   getCategories: publicProcedure
-    .input(z.object({ limit: z.number(), offset: z.number() }))
+    .input(
+      z.object({
+        limit: z.number(),
+        offset: z.number(),
+        userId: z.string().uuid(),
+      }),
+    )
     .query(async ({ ctx, input }) => {
       const response = await ctx.db
         .select()
         .from(categories)
         .leftJoin(
           userInterestedCategories,
-          eq(categories.id, userInterestedCategories.categoryId),
+          and(
+            eq(categories.id, userInterestedCategories.categoryId),
+            eq(userInterestedCategories.userId, input.userId),
+          ),
         )
         .limit(input.limit)
         .offset(input.offset);
