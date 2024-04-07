@@ -89,7 +89,9 @@ export default function LoginForm() {
 
         <div>
           <Button type="submit" className="w-full">
-            LOGIN
+            {form.formState.isSubmitting || form.formState.isSubmitSuccessful
+              ? "PLEASE WAIT"
+              : "LOGIN"}
           </Button>
         </div>
       </form>

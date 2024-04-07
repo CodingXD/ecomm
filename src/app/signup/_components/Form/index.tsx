@@ -101,7 +101,9 @@ export default function SignupForm() {
         />
         <div>
           <Button type="submit" className="w-full">
-            CREATE ACCOUNT
+            {form.formState.isSubmitting || form.formState.isSubmitSuccessful
+              ? "PLEASE WAIT"
+              : "CREATE ACCOUNT"}
           </Button>
         </div>
       </form>

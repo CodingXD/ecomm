@@ -78,7 +78,9 @@ export default function VerifyEmailForm({ email }: VerifyEmailFormProps) {
         </InputOTP>
         <div>
           <Button type="submit" className="w-full">
-            VERIFY
+            {form.formState.isSubmitting || form.formState.isSubmitSuccessful
+              ? "PLEASE WAIT"
+              : "VERIFY"}
           </Button>
         </div>
       </form>
